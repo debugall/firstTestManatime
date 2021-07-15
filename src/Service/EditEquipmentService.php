@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Equipment;
+use App\Repository\EquipmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class EditEquipmentService
@@ -23,9 +24,14 @@ class EditEquipmentService
 
     public function saveEquipment(Equipment $equipment)
     {
-        $equipment->setCreatedAt(new \DateTime());
-        $this->em->persist($equipment);
-        $this->em->flush();
+        /** @var EquipmentRepository $equipmentRepo */
+        $equipmentRepo = $this->em->getRepository(Equipment::class);
+        $equipmentExist = $equipmentRepo->getEquipmentBySerial($equipment->getNumber());
+        if ($equipmentExist == null) {
+            $equipment->setCreatedAt(new \DateTime());
+            $this->em->persist($equipment);
+            $this->em->flush();
+        }
     }
 
     public function updateEquipment(Equipment $equipment)
