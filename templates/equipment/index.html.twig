@@ -12,8 +12,6 @@
                 <th>Name</th>
                 <th>Number</th>
                 <th>Description</th>
-                <th>Created_at</th>
-                <th>Updated_at</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,8 +22,6 @@
                 <td>{{ equipment.name }}</td>
                 <td>{{ equipment.number }}</td>
                 <td>{{ equipment.description }}</td>
-                <td>{{ equipment.createdAt ? equipment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ equipment.updatedAt ? equipment.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('equipment_show', {'id': equipment.id}) }}">show</a>
                     <a href="{{ path('equipment_edit', {'id': equipment.id}) }}">edit</a>
