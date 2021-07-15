@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use App\Entity\Equipment;
+use App\Repository\EquipmentRepository;
 use App\Service\EditEquipmentService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
@@ -15,9 +16,31 @@ class EditEquipmentServiceTest extends TestCase
         $equipment = $this->createMock(Equipment::class);
         $equipment->expects($this->once())->method('setCreatedAt');
 
+        $equipmentRepo = $this->createMock(EquipmentRepository::class);
+        $equipmentRepo->expects($this->once())->method('getEquipmentBySerial')->willReturn(null);
+
         $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects($this->once())->method('getRepository')->willReturn($equipmentRepo);
         $em->expects($this->once())->method('persist')->with($equipment);
         $em->expects($this->once())->method('flush');
+
+        /** @var EditEquipmentService $editEquipmentService */
+        $editEquipmentService = new EditEquipmentService($em);
+        $editEquipmentService->saveEquipment($equipment);
+    }
+
+
+    public function testSaveEquipmentWithExistingSerialNumber(): void
+    {
+        $equipmentExit = $this->createMock(Equipment::class);
+
+        $equipment = $this->createMock(Equipment::class);
+
+        $equipmentRepo = $this->createMock(EquipmentRepository::class);
+        $equipmentRepo->expects($this->once())->method('getEquipmentBySerial')->willReturn($equipmentExit);
+
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects($this->once())->method('getRepository')->willReturn($equipmentRepo);
 
         /** @var EditEquipmentService $editEquipmentService */
         $editEquipmentService = new EditEquipmentService($em);
