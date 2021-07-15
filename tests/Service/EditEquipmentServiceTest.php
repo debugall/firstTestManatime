@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class EditEquipmentServiceTest extends TestCase
 {
-    public function testSaveEquipment(): void
+    public function testsaveEquipment(): void
     {
         $equipment = $this->createMock(Equipment::class);
         $equipment->expects($this->once())->method('setCreatedAt');
@@ -30,7 +30,7 @@ class EditEquipmentServiceTest extends TestCase
         $editEquipmentService->saveEquipment($equipment);
     }
 
-    public function testSaveEquipmentWithNullDescription(): void
+    public function testsaveEquipmentWithNullDescription(): void
     {
         $equipment = $this->createMock(Equipment::class);
         $equipment->expects($this->once())->method('setCreatedAt');

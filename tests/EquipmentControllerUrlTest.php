@@ -2,11 +2,14 @@
 
 namespace App\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class EquipmentControllerTest extends WebTestCase
+class EquipmentControllerUrlTest extends WebTestCase
 {
     const BASE_URL = 'localhost:8000';
+
+
 
     public function testIndexPage(): void
     {
@@ -27,8 +30,8 @@ class EquipmentControllerTest extends WebTestCase
     public function testEditEquipmentPage(): void
     {
         $client = static::createClient(array(), array('HTTP_HOST' => self::BASE_URL)) ;
-        $crawler = $client->request('GET', '/1/edit');
-        $this->assertResponseIsSuccessful();
+        $crawler = $client->request('GET', '/999/edit');
+        $this->assertResponseRedirects();
     }
 
 
