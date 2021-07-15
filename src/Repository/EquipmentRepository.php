@@ -20,6 +20,18 @@ class EquipmentRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param string $number
+     * @return Equipment
+     */
+    public function getEquipmentBySerial($number)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.number = :number')->setParameter('number', $number)
+            ->getQuery()->getOneOrNullResult()
+            ;
+    }
+
+    /**
      * @return Equipment[]
      */
     public function getNotDeletedEquipments()
