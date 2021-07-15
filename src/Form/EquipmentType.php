@@ -14,9 +14,9 @@ class EquipmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, ['required' => false])
-            ->add('number', TextType::class, ['required' => false])
-            ->add('description', TextareaType::class)
+            ->add('name', TextType::class, ['required' => false, 'label' => 'Name'])
+            ->add('number', TextType::class, ['required' => true, 'label' => 'Serial number'])
+            ->add('description', TextareaType::class, ['required' => true , 'label' => 'Description'])
         ;
     }
 
