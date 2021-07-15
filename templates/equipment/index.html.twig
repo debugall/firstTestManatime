@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Equipments{% endblock %}
+
+{% block body %}
+    <h1>Equipments</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Description</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipment in equipment %}
+            <tr>
+                <td>{{ equipment.id }}</td>
+                <td>{{ equipment.name }}</td>
+                <td>{{ equipment.number }}</td>
+                <td>{{ equipment.description }}</td>
+                <td>{{ equipment.createdAt ? equipment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ equipment.updatedAt ? equipment.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('equipment_show', {'id': equipment.id}) }}">show</a>
+                    <a href="{{ path('equipment_edit', {'id': equipment.id}) }}">edit</a>
+                    {% include 'equipment/_delete_form.html.twig' with {'equipment': equipment } %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('equipment_new') }}">Create new</a>
+{% endblock %}
