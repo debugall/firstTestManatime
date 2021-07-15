@@ -80,8 +80,11 @@ class EquipmentController extends AbstractController
     /**
      * @Route("/{id}/edit", name="equipment_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Equipment $equipment): Response
+    public function edit(Request $request, Equipment $equipment = null): Response
     {
+        if (empty($equipment)) {
+            return $this->redirectToRoute('equipment_index', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(EquipmentType::class, $equipment);
         $form->handleRequest($request);
 
