@@ -37,8 +37,10 @@ class EditEquipmentService
 
     public function deleteEquipment(Equipment $equipment)
     {
-        $equipment->setDeletedAt(new \DateTime());
-        $this->em->persist($equipment);
-        $this->em->flush();
+        if (!$equipment->getDeletedAt()) {
+            $equipment->setDeletedAt(new \DateTime());
+            $this->em->persist($equipment);
+            $this->em->flush();
+        }
     }
 }

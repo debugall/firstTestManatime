@@ -53,4 +53,16 @@ class EditEquipmentServiceTest extends TestCase
         $editEquipmentService = new EditEquipmentService($em);
         $editEquipmentService->deleteEquipment($equipment);
     }
+
+    public function testDeteleAlreadyDeletedEquipment(): void
+    {
+        $equipment = $this->createMock(Equipment::class);
+        $equipment->expects($this->once())->method('getDeletedAt')->willReturn(new \DateTime());
+
+        $em = $this->createMock(EntityManagerInterface::class);
+
+        /** @var EditEquipmentService $editEquipmentService */
+        $editEquipmentService = new EditEquipmentService($em);
+        $editEquipmentService->deleteEquipment($equipment);
+    }
 }
