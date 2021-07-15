@@ -15,6 +15,27 @@ class EditEquipmentServiceTest extends TestCase
     {
         $equipment = $this->createMock(Equipment::class);
         $equipment->expects($this->once())->method('setCreatedAt');
+        $equipment->expects($this->once())->method('getDescription')->willReturn('test');
+
+        $equipmentRepo = $this->createMock(EquipmentRepository::class);
+        $equipmentRepo->expects($this->once())->method('getEquipmentBySerial')->willReturn(null);
+
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects($this->once())->method('getRepository')->willReturn($equipmentRepo);
+        $em->expects($this->once())->method('persist')->with($equipment);
+        $em->expects($this->once())->method('flush');
+
+        /** @var EditEquipmentService $editEquipmentService */
+        $editEquipmentService = new EditEquipmentService($em);
+        $editEquipmentService->saveEquipment($equipment);
+    }
+
+    public function testSaveEquipmentWithNullDescription(): void
+    {
+        $equipment = $this->createMock(Equipment::class);
+        $equipment->expects($this->once())->method('setCreatedAt');
+        $equipment->expects($this->once())->method('getDescription')->willReturn(null);
+        $equipment->expects($this->once())->method('setDescription')->with('');
 
         $equipmentRepo = $this->createMock(EquipmentRepository::class);
         $equipmentRepo->expects($this->once())->method('getEquipmentBySerial')->willReturn(null);

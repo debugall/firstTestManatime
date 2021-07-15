@@ -28,6 +28,9 @@ class EditEquipmentService
         $equipmentRepo = $this->em->getRepository(Equipment::class);
         $equipmentExist = $equipmentRepo->getEquipmentBySerial($equipment->getNumber());
         if ($equipmentExist == null) {
+            if ($equipment->getDescription() === null) {
+                $equipment->setDescription('');
+            }
             $equipment->setCreatedAt(new \DateTime());
             $this->em->persist($equipment);
             $this->em->flush();
