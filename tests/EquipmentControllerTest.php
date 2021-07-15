@@ -24,5 +24,13 @@ class EquipmentControllerTest extends WebTestCase
     }
 
 
+    public function testEditEquipmentPage(): void
+    {
+        $client = static::createClient(array(), array('HTTP_HOST' => self::BASE_URL)) ;
+        $crawler = $client->request('GET', '/1/edit');
+        $this->assertResponseIsSuccessful();
+    }
+
+
 
 }
