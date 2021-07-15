@@ -3,3 +3,5 @@ php ./vendor/bin/phpunit
 vendor/bin/phpstan analyse -l 5 src
 
 php .\vendor\bin\phpmd src text cleancode,codesize,design
+
+php ./vendor/bin/phpmetrics --report-html=phpmetric_report src
